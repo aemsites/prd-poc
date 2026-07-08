@@ -1,0 +1,74 @@
+VISUAL MEASUREMENT CHECKLIST FOR cards-editorial
+================================================
+Extracted from Figma node: 1:13101 (grid), 1:13104 (single Entry Module card)
+File: JRREF4HLZrmfR2j3HzTc2W
+Date: 2026-07-08
+
+LAYOUT & DIMENSIONS
+☑ Container width: 1440px (source: frame 1:13101 width="1440")
+☑ Container height: 1346px (source: frame 1:13101 height; content-driven, not fixed)
+☑ Container padding: top 0px right 40px bottom 0px left 40px (source: grid x=1680 within 1640-origin 1440 frame → 40px side gutters)
+☑ Grid/Flex gap: 12px (source: card columns at x 1680/2023/2366/2709 → 331px card + 12px gap)
+☑ Column count: 4 (source: 4 cards per row in metadata: x=1680,2023,2366,2709)
+☑ Item width: 331px (source: instance 1:13104 width="331")
+☑ Item height: 412px (source: instance 1:13104 height="412"; content-driven — varies 393-431 across cards)
+
+SPACING (EXACT PIXELS)
+☑ Section padding: 40px horizontal, 0 vertical (source: grid gutters, see container padding)
+☑ Item internal padding: 0px 10px 0px 0px (source: Label Container pr-[10px] in design_context 1:13104)
+☑ Gap between items: 12px column gap; row gap 20px (source: row1 y=845.6, row2 y=1277.6 → 1277.6-845.6-412≈20)
+☑ Margin between text elements: 7px (source: Label Container gap-[7px] in design_context)
+☑ Image margin/padding: 12px below image (source: Entry Module root gap-[12px] between Image and Label Container)
+
+COLORS (EXACT HEX + OPACITY)
+☑ Background color: #ffffff (opacity: 100%) (source: Entry Module root bg-[#ffffff])
+☑ Primary text color: #000000 (source: title/author text-[#000000] in design_context)
+☑ Secondary text color: #00000040 (rgba(0,0,0,0.25)) (source: category label text-[#00000040])
+☑ Accent/link color: #000000 (source: cards are linked; link color inherits primary text #000000)
+☑ Border color: N/A none (source: no border classes in design_context)
+☑ Hover background: #ffffff unchanged (source: no hover state defined in Figma static design)
+☑ Hover text color: #000000 unchanged (source: no hover state defined in Figma static design)
+☑ Image placeholder background: #eeeeee (source: Image container bg-[#eeeeee])
+
+TYPOGRAPHY (ALL PROPERTIES)
+☑ Heading (title) font-family: Univers, sans-serif → fallback 'Helvetica Neue', Helvetica, Arial, sans-serif (source: font-['Univers',sans-serif]; Univers unlicensed locally)
+☑ Heading font-size: 16px (source: text-[16px] on title node 1:13104;1644:24728)
+☑ Heading font-weight: 700 (source: screenshot shows title visibly bolder than author line; design_context reports normal but visual truth is bold)
+☑ Heading line-height: 19px (source: leading-[19px])
+☑ Heading letter-spacing: 0px (source: no tracking class in design_context)
+☑ Heading text-transform: none (source: text rendered mixed-case "Starting from Sensation")
+☑ Heading font-style: normal (source: no italic class)
+☑ Body (author) font-family: Univers, sans-serif → fallback 'Helvetica Neue', Helvetica, Arial, sans-serif (source: font-['Univers',sans-serif])
+☑ Body font-size: 16px (source: text-[16px] on author node 1:13104;1644:24729)
+☑ Body font-weight: 400 (source: font-normal in design_context; visually regular)
+☑ Body line-height: 19px (source: leading-[19px])
+☑ Body letter-spacing: 0px (source: no tracking class)
+☑ Body font-style: normal (source: no italic class)
+☑ Category font-family: Univers, sans-serif → fallback 'Helvetica Neue', Helvetica, Arial, sans-serif (source: font-['Univers',sans-serif])
+☑ Category font-size: 16px (source: text-[16px] on category node 1:13104;1644:24730)
+☑ Category font-weight: 400 (source: font-normal)
+☑ Category line-height: 19px (source: leading-[19px])
+☑ Category color: #00000040 (source: text-[#00000040])
+
+BORDERS & RADIUS (CRITICAL - DO NOT ASSUME)
+☑ Border width: 0px (source: no border classes in design_context)
+☑ Border style: none (source: no border styling extracted)
+☑ Border color: N/A (source: no border present)
+☑ Border radius: 0px (source: no rounded-* classes; sharp rectangular cards and images)
+
+SHADOWS (EXACT VALUES)
+☑ Box-shadow offset-x: 0px (source: no shadow classes in design_context)
+☑ Box-shadow offset-y: 0px (source: no shadow classes)
+☑ Box-shadow blur: 0px (source: no shadow classes)
+☑ Box-shadow spread: 0px (source: no shadow classes)
+☑ Box-shadow color: none (source: no shadow present — flat design)
+
+EFFECTS & TRANSITIONS
+☑ Hover transform: none (source: static Figma design, no hover variant)
+☑ Transition duration: 0ms (source: no transition defined; will add subtle 200ms for link affordance)
+☑ Transition timing: ease (source: convention for link hover affordance)
+☑ Opacity changes: none (source: no hover opacity in Figma)
+
+IMAGE
+☑ Image aspect ratio: 1:1 square (source: Image container h-[331px] equal to card width 331px)
+☑ Image object-fit: cover (source: img w-[331px] h-full inside overflow-hidden container)

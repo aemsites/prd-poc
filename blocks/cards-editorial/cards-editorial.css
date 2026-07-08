@@ -1,0 +1,101 @@
+/* Import component-specific tokens */
+@import url('./cards-editorial-tokens.css');
+
+/* cards-editorial block styles */
+.cards-editorial {
+  background: var(--cards-editorial-background);
+}
+
+.cards-editorial > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--cards-editorial-min-column), 1fr));
+  gap: var(--cards-editorial-row-gap) var(--cards-editorial-column-gap);
+}
+
+.cards-editorial > ul > li {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cards-editorial-image-margin-bottom);
+  padding: var(--cards-editorial-item-padding);
+  background: var(--cards-editorial-item-background);
+  border: var(--cards-editorial-item-border-width) var(--cards-editorial-item-border-style) var(--cards-editorial-item-border-color);
+  border-radius: var(--cards-editorial-item-border-radius);
+}
+
+.cards-editorial .cards-editorial-card-image {
+  line-height: 0;
+  background: var(--cards-editorial-image-background);
+  border-radius: var(--cards-editorial-image-border-radius);
+  overflow: hidden;
+}
+
+.cards-editorial .cards-editorial-card-image img {
+  width: 100%;
+  aspect-ratio: var(--cards-editorial-image-aspect-ratio);
+  object-fit: var(--cards-editorial-image-object-fit);
+}
+
+.cards-editorial .cards-editorial-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cards-editorial-content-gap);
+}
+
+.cards-editorial .cards-editorial-card-body p {
+  margin: 0;
+  font-family: var(--cards-editorial-body-font-family);
+  font-size: var(--cards-editorial-body-font-size);
+  font-weight: var(--cards-editorial-body-font-weight);
+  font-style: var(--cards-editorial-body-font-style);
+  line-height: var(--cards-editorial-body-line-height);
+  letter-spacing: var(--cards-editorial-body-letter-spacing);
+  color: var(--cards-editorial-body-color);
+}
+
+/* Title */
+.cards-editorial .cards-editorial-card-body strong {
+  font-family: var(--cards-editorial-heading-font-family);
+  font-size: var(--cards-editorial-heading-font-size);
+  font-weight: var(--cards-editorial-heading-font-weight);
+  font-style: var(--cards-editorial-heading-font-style);
+  line-height: var(--cards-editorial-heading-line-height);
+  letter-spacing: var(--cards-editorial-heading-letter-spacing);
+  text-transform: var(--cards-editorial-heading-text-transform);
+  color: var(--cards-editorial-heading-color);
+}
+
+/* Category label */
+.cards-editorial .cards-editorial-card-body em {
+  font-family: var(--cards-editorial-category-font-family);
+  font-size: var(--cards-editorial-category-font-size);
+  font-weight: var(--cards-editorial-category-font-weight);
+  font-style: var(--cards-editorial-category-font-style);
+  line-height: var(--cards-editorial-category-line-height);
+  letter-spacing: var(--cards-editorial-category-letter-spacing);
+  color: var(--cards-editorial-category-color);
+}
+
+/* Linked cards: keep card text styling, add subtle hover affordance */
+.cards-editorial > ul > li a {
+  color: inherit;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--cards-editorial-image-margin-bottom);
+  transition: opacity var(--cards-editorial-transition-duration) var(--cards-editorial-transition-timing);
+}
+
+.cards-editorial > ul > li a:hover {
+  opacity: var(--cards-editorial-item-hover-opacity);
+  transform: var(--cards-editorial-item-hover-transform);
+}
+
+/* Desktop: fixed 4-column grid to match Figma */
+@media (width >= 900px) {
+  .cards-editorial > ul {
+    grid-template-columns: repeat(var(--cards-editorial-columns), 1fr);
+  }
+}

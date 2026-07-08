@@ -1,0 +1,40 @@
+{
+  "variantName": "cards-editorial",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-07-08T00:00:00.000Z",
+  "sourceContext": {
+    "source": "figma",
+    "figmaFileKey": "JRREF4HLZrmfR2j3HzTc2W",
+    "figmaNodeId": "1:13101",
+    "figmaNodeName": "Frame 1422162453 (Entry Module grid)",
+    "figmaUrl": "https://figma.com/design/JRREF4HLZrmfR2j3HzTc2W?node-id=1:13101"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "compact",
+    "purpose": "cards",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "1 image + heading + body text + category label",
+    "buttonCount": 0,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "editorial / article listing sections",
+      "light backgrounds",
+      "flat borderless card grids (1 or more cards)"
+    ],
+    "notSuitableFor": [
+      "text-only pages",
+      "cards requiring bordered or shadowed containers"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["cards-editorial"],
+    "reuseCount": 1,
+    "lastUsed": "2026-07-08T00:00:00.000Z"
+  }
+}
