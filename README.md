@@ -1,9 +1,8 @@
-# Your Project's Title...
-Your project's description...
+# POC
 
 ## Environments
-- Preview: https://main--{repo}--{owner}.aem.page/
-- Live: https://main--{repo}--{owner}.aem.live/
+- Preview: https://main--prd-poc--aemsites.aem.page/
+- Live: https://main--prd-poc--aemsites.aem.live/
 
 ## Documentation
 
