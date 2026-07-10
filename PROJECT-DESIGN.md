@@ -86,7 +86,7 @@ Figma frames are **1440px desktop** only; no mobile frame was provided in the pr
 
 ## Blocks
 
-Every author-insertable block has a live, clean example in the Component Library at **`/library/blocks/<block>`** (see the Component Library section) — that page is the canonical visual reference and the author-insertion source. Structural blocks (`header`, `footer`, `fragment`, `widget`) are not author-insertable and have no library page.
+Every author-insertable block has a live, clean example in the Component Library at **`/library/blocks/<block>`** (see the Component Library section) — that page is the canonical visual reference and the author-insertion source. Structural blocks (`header`, `footer`, `fragment`) are not author-insertable and have no library page.
 
 | Block | Variant | Origin | Content model | Used on | Library |
 |-------|---------|--------|---------------|---------|---------|
@@ -131,7 +131,7 @@ A living design-system reference and author-insertion palette — the library IS
 - `content/library/index.plain.html` — index (overview + Pages list + design identity); serves at `/library/` via EDS folder-index.
 - `content/library/default-content.plain.html` — all semantic elements + CTA variants (the design-system showcase).
 - `content/library/sections.plain.html` — section-style comparison (Default / Dark / Narrow / Expandable).
-- `content/library/blocks/` — one clean page per author-insertable block: `hero`, `projects` (grid + scroller), `project-table` (search + base), `project-header`, `event-list`, `contributors`, `columns` (regular + dark section), `projects-search`. Structural blocks (`header`/`footer`/`fragment`/`widget`) are not author-insertable → no library page. Entry images reference local `/media/*`.
+- `content/library/blocks/` — one clean page per author-insertable block: `hero`, `projects` (grid + scroller), `project-table` (search + base), `project-header`, `event-list`, `contributors`, `columns` (regular + dark section), `projects-search`. Structural blocks (`header`/`footer`/`fragment`) are not author-insertable → no library page. Entry images reference local `/media/*`.
 - `block-library.json` (repo root) — the DA Library-panel blocks list; one row per insertable block, each `name` (author label) + `path` = absolute `https://main--<repo>--<owner>.aem.live/library/blocks/<block>` (no `.plain.html`).
 
 **Local serving quirk:** the dev server maps `content/` under the **`/content` URL prefix** (`aem up --html-folder content`), so pages preview at `http://localhost:3000/content/library/…`; in DA/published they live at `/library/…` (no `/content`). Restart `aem up` after adding new content files — it scans the folder at boot.
