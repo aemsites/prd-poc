@@ -1,0 +1,8 @@
+{
+  "sites": {
+    "prd-poc": {
+      "previewOrg": "aemsites",
+      "previewSite": "prd-poc"
+    }
+  }
+}

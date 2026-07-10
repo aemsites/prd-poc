@@ -11,73 +11,128 @@
  */
 
 :root {
-  /* colors */
-  --background-color: white;
-  --light-color: #f8f8f8;
-  --dark-color: #505050;
-  --text-color: #131313;
-  --link-color: #3b63fb;
-  --link-hover-color: #1d3ecf;
+  /* colors — strictly monochrome editorial palette (Prada Index) */
+  --background-color: #fff;
+  --text-color: #000;
+  --metadata-color: #707070;   /* secondary text, nav, metadata blocks */
+  --rule-color: #8d9091;       /* thin header/divider rule */
+  --border-color: #707070;     /* framed containers (search bar, nav) */
+  --placeholder-color: #eee;   /* image placeholders */
+  --light-color: #f5f5f5;      /* light surface */
+
+  /* links — monochrome, no brand accent */
+  --link-color: #000;
+  --link-hover-color: #707070;
 
   /* fonts */
-  --body-font-family: roboto, roboto-fallback, sans-serif;
-  --heading-font-family: roboto-condensed, roboto-condensed-fallback, sans-serif;
+  --body-font-family: univers-next-pro, univers-fallback, arial, sans-serif;
+  --heading-font-family: var(--body-font-family);
 
-  /* body sizes */
-  --body-font-size-m: 22px;
-  --body-font-size-s: 19px;
-  --body-font-size-xs: 17px;
+  /* weights (Univers uses only Regular for text, Bold for display/titles) */
+  --weight-regular: 400;
+  --weight-bold: 700;
+
+  /*
+   * TYPE SCALE — measured from Figma frames (file 6WyrWzRXskdPTcPtQ296CQ).
+   * Each role carries a matched size / line-height / tracking triplet.
+   * Sizes below the mobile breakpoint are overridden in the @media block.
+   * Role → source: display=hero "Satellites II"/"A record of culture" (80);
+   * xl=banner "Issue 1" (42); l=nav + section titles (37); m=banner body +
+   * About intro (32); body-l=credits (20); body-m=body/entry (16);
+   * label=search + UI labels (14, uppercase); tag=metadata tags (13, uppercase).
+   */
 
   /* heading sizes */
-  --heading-font-size-xxl: 55px;
-  --heading-font-size-xl: 44px;
-  --heading-font-size-l: 34px;
-  --heading-font-size-m: 27px;
-  --heading-font-size-s: 24px;
-  --heading-font-size-xs: 22px;
+  --heading-font-size-xxl: 80px;  /* display */
+  --heading-font-size-xl: 42px;   /* banner heading */
+  --heading-font-size-l: 37px;    /* nav / section titles */
+  --heading-font-size-m: 32px;    /* banner body / intro lead */
+  --heading-font-size-s: 20px;    /* small heading / credits label */
+  --heading-font-size-xs: 16px;   /* smallest heading */
+
+  /* body sizes */
+  --body-font-size-m: 16px;    /* default body, entry text */
+  --body-font-size-s: 14px;    /* tracked uppercase UI labels */
+  --body-font-size-xs: 13px;   /* uppercase metadata tags, dense tables */
+
+  /* line-heights per role (Figma: display/titles set solid ≈1.0; body looser) */
+  --line-height-display: 1;       /* 80/80, 42/42, 37/37 */
+  --line-height-heading: 1.19;    /* 32/38 */
+  --line-height-body: 1.19;       /* 16/19 */
+  --line-height-body-l: 1.15;     /* 20/23 */
+  --line-height-label: 1;         /* 14/14, 13/13 */
+
+  /* letter-spacing per role (Figma tracking ÷ size) */
+  --tracking-display: -0.03em;    /* -2.4px @ 80, -1.11px @ 37 */
+  --tracking-heading: -0.01em;    /* -0.42px @ 42, -0.32px @ 32 */
+  --tracking-label: 0.1em;        /* +1.4px @ 14, +1.3px @ 13 (uppercase) */
+
+  /* layout */
+  --content-max-width: 1440px;
+  --page-padding: 40px;      /* base module: horizontal content gutter + section top inset */
+
+  /* vertical spacing system */
+  --section-padding: 30px;
+  --block-padding: 24px;
+
+  /*
+   * SPACING SCALE — the editorial rhythm, measured from Figma
+   * (file 6WyrWzRXskdPTcPtQ296CQ). The site reuses a tight set of gaps; these
+   * tokens ARE that set, so every block draws from the same rhythm instead of
+   * one-off px. Use a token for any gap/inset that recurs; leave only true
+   * component geometry (icon dims, hairlines) as raw px.
+   * Sources: 2xs=metadata-ribbon cell pad (8) + entry-label line gap (~7→8);
+   * xs=grid label inset / image gap / search-bar pad (10); s=all grid & column
+   * gutters + entry image→label (12); m=stacked-heading gap / CTA pad / nav +
+   * hero content gaps (20); l=banner desc→CTA (36); xl=banner heading-group→
+   * body (48); 2xl=dark-banner bottom breathing room (80 = 2× base module).
+   * The 40 base module lives in --page-padding; 24 in --block-padding.
+   */
+  --space-3xs: 4px;
+  --space-2xs: 8px;
+  --space-xs: 10px;
+  --space-s: 12px;
+  --space-m: 20px;
+  --space-l: 36px;
+  --space-xl: 48px;
+  --space-2xl: 80px;
 
   /* nav height */
-  --nav-height: 64px;
+  --nav-height: 99px;
 }
 
-/* fallback fonts */
-@font-face {
-  font-family: roboto-condensed-fallback;
-  size-adjust: 88.82%;
-  src: local('Arial');
-}
-
-@font-face {
-  font-family: roboto-fallback;
-  size-adjust: 99.529%;
-  src: local('Arial');
-}
-
-@media (width >= 900px) {
+@media (width <= 900px) {
   :root {
-    /* body sizes */
-    --body-font-size-m: 18px;
-    --body-font-size-s: 16px;
-    --body-font-size-xs: 14px;
-
-    /* heading sizes */
-    --heading-font-size-xxl: 45px;
-    --heading-font-size-xl: 36px;
+    --heading-font-size-xxl: 44px;
+    --heading-font-size-xl: 34px;
     --heading-font-size-l: 28px;
-    --heading-font-size-m: 22px;
-    --heading-font-size-s: 20px;
-    --heading-font-size-xs: 18px;
+    --heading-font-size-m: 24px;
+    --heading-font-size-s: 18px;
+    --page-padding: 20px;
+    --section-padding: 20px;
+    --block-padding: 20px;
   }
+}
+
+/* Page ground is BLACK on every page; the readable content sits on a centered
+   white "sheet" (the section content columns), with black filling the gutters
+   at wide viewports — the same look the homepage sheet has as it covers the
+   hero. See the content-column rule below and header.css for the header band. */
+html {
+  background-color: var(--text-color);
 }
 
 body {
   display: none;
   margin: 0;
-  background-color: var(--background-color);
+  background-color: var(--text-color);
   color: var(--text-color);
   font-family: var(--body-font-family);
   font-size: var(--body-font-size-m);
-  line-height: 1.6;
+  font-weight: var(--weight-regular);
+  line-height: 1.2;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizelegibility;
 }
 
 body.appear {
@@ -85,7 +140,7 @@ body.appear {
 }
 
 header {
-  height: var(--nav-height);
+  min-height: var(--nav-height);
 }
 
 header .header,
@@ -98,26 +153,50 @@ footer .footer[data-block-status="loaded"] {
   visibility: visible;
 }
 
+/* headings — Univers bold; display sizes set solid with tight tracking */
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  margin-top: 0.8em;
-  margin-bottom: 0.25em;
+  margin: 0;
   font-family: var(--heading-font-family);
-  font-weight: 600;
-  line-height: 1.25;
+  font-weight: var(--weight-bold);
+  line-height: var(--line-height-display);
+  letter-spacing: var(--tracking-display);
   scroll-margin: 40px;
 }
 
-h1 { font-size: var(--heading-font-size-xxl); }
-h2 { font-size: var(--heading-font-size-xl); }
-h3 { font-size: var(--heading-font-size-l); }
-h4 { font-size: var(--heading-font-size-m); }
-h5 { font-size: var(--heading-font-size-s); }
-h6 { font-size: var(--heading-font-size-xs); }
+h1 {
+  font-size: var(--heading-font-size-xxl);
+}
+
+h2 {
+  font-size: var(--heading-font-size-xl);
+}
+
+h3 {
+  font-size: var(--heading-font-size-l);
+}
+
+h4 {
+  font-size: var(--heading-font-size-m);
+  line-height: var(--line-height-heading);
+  letter-spacing: var(--tracking-heading);
+}
+
+h5 {
+  font-size: var(--heading-font-size-s);
+  line-height: var(--line-height-body-l);
+  letter-spacing: var(--tracking-heading);
+}
+
+h6 {
+  font-size: var(--heading-font-size-xs);
+  line-height: var(--line-height-body);
+  letter-spacing: normal;
+}
 
 p,
 dl,
@@ -125,8 +204,17 @@ ol,
 ul,
 pre,
 blockquote {
-  margin-top: 0.8em;
-  margin-bottom: 0.25em;
+  margin: 0;
+  font-size: var(--body-font-size-m);
+  line-height: var(--line-height-body);
+}
+
+/* lead paragraph: the intro `<p>` directly after a page's opening `<h1>` runs
+   large (32px/37px per Figma, e.g. the About page top). Scoped to a section
+   `> div` so it only hits page-opening default content, not block internals. */
+main > .section > div > h1 + p {
+  font-size: var(--heading-font-size-m);
+  line-height: 1.16;
 }
 
 code,
@@ -136,14 +224,9 @@ pre {
 
 pre {
   padding: 16px;
-  border-radius: 8px;
   background-color: var(--light-color);
   overflow-x: auto;
   white-space: pre;
-}
-
-main > div {
-  margin: 40px 16px;
 }
 
 input,
@@ -153,7 +236,7 @@ button {
   font: inherit;
 }
 
-/* links */
+/* links — monochrome, underline on hover */
 a:any-link {
   color: var(--link-color);
   text-decoration: none;
@@ -165,9 +248,9 @@ a:hover {
   text-decoration: underline;
 }
 
-/* buttons */
+/* buttons — squared editorial, uppercase tracked (no pill radius) */
 p.button-wrapper {
-  margin: 12px 0;
+  margin: 0;
 }
 
 a.button:any-link,
@@ -178,12 +261,15 @@ button.button {
   justify-content: center;
   max-width: 100%;
   margin: 0;
-  border: 2px solid transparent;
-  border-radius: 2.4em;
-  padding: 0.5em 1.2em;
+  border: 1px solid var(--text-color);
+  border-radius: 0;
+  padding: 0.75em 1.5em;
   font: inherit;
-  font-weight: 500;
-  line-height: 1.25;
+  font-size: var(--body-font-size-m);
+  font-weight: var(--weight-regular);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
   overflow: hidden;
@@ -208,25 +294,14 @@ a.button.primary:hover,
 a.button.primary:focus-visible,
 button.button.primary:hover,
 button.button.primary:focus-visible {
-  border-color: var(--dark-color);
-  background-color: var(--dark-color);
-  color: var(--light-color);
-}
-
-a.button.primary[aria-disabled="true"],
-a.button.primary[aria-disabled="true"]:hover,
-a.button.primary[aria-disabled="true"]:focus-visible,
-button.button.primary:disabled,
-button.button.primary:disabled:hover,
-button.button.primary:disabled:focus-visible {
-  background-color: var(--light-color);
-  border-color: var(--light-color);
-  color: var(--dark-color);
+  background-color: var(--metadata-color);
+  border-color: var(--metadata-color);
+  color: var(--background-color);
+  text-decoration: none;
 }
 
 a.button.secondary,
 button.button.secondary {
-  border-color: var(--text-color);
   background-color: transparent;
   color: var(--text-color);
 }
@@ -235,47 +310,22 @@ a.button.secondary:hover,
 a.button.secondary:focus-visible,
 button.button.secondary:hover,
 button.button.secondary:focus-visible {
-  border-color: var(--dark-color);
+  border-color: var(--metadata-color);
+  color: var(--metadata-color);
+  text-decoration: none;
+}
+
+a.button:disabled,
+a.button[aria-disabled="true"],
+button.button:disabled {
+  border-color: var(--metadata-color);
   background-color: var(--light-color);
-  color: var(--dark-color);
+  color: var(--metadata-color);
 }
 
-a.button.secondary[aria-disabled="true"],
-a.button.secondary[aria-disabled="true"]:hover,
-a.button.secondary[aria-disabled="true"]:focus-visible,
-button.button.secondary:disabled,
-button.button.secondary:disabled:hover,
-button.button.secondary:disabled:focus-visible {
-  background-color: var(--light-color);
-  border-color: var(--light-color);
-  color: var(--dark-color);
-}
-
-/* high-impact call-to-action */
-a.button.accent,
-button.button.accent {
-  border-color: var(--link-color);
-  background-color: var(--link-color);
-  color: var(--background-color);
-}
-
-a.button.accent:hover,
-a.button.accent:focus-visible,
-button.button.accent:hover,
-button.button.accent:focus-visible {
-  border-color: var(--link-hover-color);
-  background-color: var(--link-hover-color);
-}
-
-a.button.accent[aria-disabled="true"],
-a.button.accent[aria-disabled="true"]:hover,
-a.button.accent[aria-disabled="true"]:focus-visible,
-button.button.accent:disabled,
-button.button.accent:disabled:hover,
-button.button.accent:disabled:focus-visible {
-  background-color: var(--light-color);
-  border-color: var(--light-color);
-  color: var(--dark-color);
+:focus-visible {
+  outline: 2px solid var(--text-color);
+  outline-offset: 2px;
 }
 
 main img {
@@ -295,31 +345,391 @@ main img {
   width: 100%;
 }
 
-/* sections */
+/* sections + vertical-spacing system */
 main > .section {
-  margin: 40px 0;
+  margin: 0;
+  padding: 0;
 }
 
 main > .section > div {
-  max-width: 1200px;
-  margin: auto;
-  padding: 0 24px;
+  max-width: var(--content-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding: var(--page-padding);
 }
 
-main > .section:first-of-type {
-  margin-top: 0;
+/* block-to-block rhythm inside a section */
+main > .section > div > * + * {
+  margin-top: var(--block-padding);
 }
 
-@media (width >= 900px) {
-  main > .section > div {
-    padding: 0 32px;
+/* White content sheet on every non-home page: each non-dark section paints
+   white ONLY within its capped content column (`> div`), so the black page
+   ground shows in the side gutters — the same centered white sheet the homepage
+   grid section is, minus the hero-cover scroll choreography. Consecutive
+   sections stack flush (section padding is 0), reading as one continuous sheet.
+   Home is excluded — its bespoke sticky/reveal rules (below) own its sheet. */
+body:not(.homepage) main > .section:not(.dark) > div {
+  background-color: var(--background-color);
+}
+
+/* section metadata variants */
+
+/* dark section — black surface, white text (Issue banner). Light-on-dark:
+   nudge tracking slightly open; weight already bold on headings so no bump. */
+main .section.dark {
+  background-color: var(--text-color);
+  color: var(--background-color);
+}
+
+main .section.dark a:any-link {
+  color: var(--background-color);
+}
+
+main .section.dark a:hover {
+  color: var(--placeholder-color);
+}
+
+/* CTA inverts on dark: white fill / black text (primary), white outline (secondary) */
+main .section.dark a.button.primary {
+  border-color: var(--background-color);
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+main .section.dark a.button.primary:hover,
+main .section.dark a.button.primary:focus-visible {
+  border-color: var(--placeholder-color);
+  background-color: var(--placeholder-color);
+  color: var(--text-color);
+}
+
+main .section.dark a.button.secondary {
+  border-color: var(--background-color);
+  color: var(--background-color);
+}
+
+main .section.dark a.button.secondary:hover,
+main .section.dark a.button.secondary:focus-visible {
+  border-color: var(--placeholder-color);
+  color: var(--placeholder-color);
+}
+
+main .section.dark :focus-visible {
+  outline-color: var(--background-color);
+}
+
+/* ---- Home scroll choreography (bespoke) ----
+   Beat 1: the hero-cover section pins, and the following section rises over it.
+   Beat 4: the project-table's header band pins for the rest of the page.
+   Scoped to a main that contains a hero-cover so no other page is affected.
+   (Beats 2 & 3 — nav pins with the sheet, then the dark section covers it — are
+   pure native scroll: header.js relocates the <header> into the grid sheet and
+   header.css pins it with `position: sticky`. See header.css `.nav-placed`.) */
+
+/* On Home, header.js relocates the whole <header> into the top of the grid
+   sheet (see header.css `.nav-placed`), so it must not reserve flow space above
+   main either before that runs or in its new home. */
+body.homepage header {
+  min-height: 0;
+}
+
+body.homepage main > .section:first-child {
+  position: sticky;
+  top: 0;
+  z-index: 0;
+
+  /* the hero is full-bleed: kill BOTH the section's top and bottom
+     --section-padding. Top: hero sits flush at the viewport top (nav rides in
+     the sheet above it). Bottom: the 30px pad would otherwise show as a black
+     band below the hero image and before the white sheet rises over it. */
+  padding-block: 0;
+}
+
+/* Content is capped at max-width and centered; BLACK fills the sides at wider
+   viewports (Figma). The whole page ground is black — set on <html>/<body> (not
+   just main) so any area outside main (overscroll, gaps) is black too, never
+   white. Each section then paints its own surface within the capped column. */
+html:has(body.homepage),
+body.homepage,
+body.homepage main {
+  background-color: var(--text-color);
+}
+
+/* every section after the hero rides above it and covers it on scroll. Each
+   paints an OPAQUE black across its full width (the "black sides") so it fully
+   covers the sticky hero underneath — a transparent section would let the
+   z:0 sticky hero show through its side gutters (main's own black ground sits
+   behind the sticky hero, so transparency reveals the hero, not the ground). */
+body.homepage main > .section:first-child ~ .section {
+  position: relative;
+  z-index: 1;
+  background-color: var(--text-color);
+}
+
+/* the grid sheet (first section after the hero, carrying the relocated nav)
+   must meet the hero flush — its white ground lives on the inner `> div`, so
+   the div's top padding would show the black ground as a gap above the nav.
+   Zero the TOP only (the relocated nav supplies its own top inset); the global
+   `> div` rule keeps the --page-padding on the other three sides. */
+body.homepage main > .section:first-child + .section > div {
+  padding-top: 0;
+}
+
+/* opaque white ground only within the capped content of light sections, so the
+   rising sheet covers the hero's content column in white (sides stay black). */
+body.homepage main > .section:first-child ~ .section:not(.dark) > div {
+  background-color: var(--background-color);
+}
+
+/* hero content column is capped + centered too, matching the sheet's OUTER
+   width so the rising white sheet covers it exactly; black fills the hero's
+   sides. The sheet div is content-box (1440 + 2×page-padding), so the hero
+   column must span the same footprint. */
+body.homepage main > .section:first-child .hero-wrapper {
+  max-width: calc(var(--content-max-width) + 2 * var(--page-padding));
+  margin-inline: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.homepage main > .section:first-child {
+    position: static;
   }
 }
 
-/* section metadata */
-main .section.light,
-main .section.highlight {
-  background-color: var(--light-color);
-  margin: 0;
-  padding: 40px 0;
+/* ---- About page template (`template: template-content` → body.template-content) ----
+   The About screen lays its issue archive (`projects`) out as a 3-column grid
+   (Figma 1:13576). The template owns this column count so the page composition
+   is driven here, not by the block's default. (The credits `contributors`
+   masthead owns its own 3-column flow in the block CSS.) */
+body.template-content main .projects.grid > ul {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* ---- Projects + Project Detail templates: drop wrapper top/bottom padding ----
+   Zero the vertical page-padding on the project-header and projects wrappers so
+   these sections sit tighter. Scoped to the two template body classes (NOT the
+   shared `main > .section > div` rule) so Home and About — which also use the
+   `projects` block and are style-validated (frozen) — keep their 40px insets. */
+body.template-projects main > .project-header-container > .project-header-wrapper,
+body.template-projects main > .projects-container > .projects-wrapper,
+body.template-project-detail main > .project-header-container > .project-header-wrapper,
+body.template-project-detail main > .projects-container > .projects-wrapper {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* ---- Project Detail template (`template: project-detail` → body.template-project-detail) ----
+   Styles the page's DEFAULT CONTENT (the page blocks — project-header, event-list,
+   project-table, projects-search — are already styled by their own CSS): (1) the
+   overview image scroller under the header, (2) the long-form entry sections
+   (title + cover image(s) + body). The narrow/expandable SECTION STYLES (below,
+   unscoped by template) drive the reading-measure + Read-more behavior.
+   All scoped to the template body class → fully additive, touches no other page. */
+
+/* Overview: a horizontal, scrollable row of larger images under the intro (same
+   bleed pattern as the projects scroller). Bleeds to both column edges; images
+   keep a fixed height and natural width, scrolling sideways. */
+body.template-project-detail main > .section:first-child .default-content-wrapper p:first-child {
+  display: flex;
+  gap: var(--space-s);
+  margin-inline: calc(-1 * var(--page-padding));
+  padding-inline: var(--page-padding);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  line-height: 0;
+}
+
+body.template-project-detail main > .section:first-child .default-content-wrapper p:first-child::-webkit-scrollbar {
+  display: none;
+}
+
+body.template-project-detail main > .section:first-child .default-content-wrapper p:first-child img {
+  width: auto;
+  height: 480px;
+  max-width: none;
+  object-fit: cover;
+}
+
+/* Overview intro paragraph — full content width, left-aligned body (never
+   centered, per Prada). 20px reading size. */
+body.template-project-detail main > .section:first-child .default-content-wrapper p:first-child + p {
+  margin-top: var(--space-l);
+  font-size: var(--heading-font-size-s);
+  line-height: var(--line-height-body-l);
+}
+
+/* Entry sections — every default-content section AFTER the header/table region:
+   a two-line 42px title (first line bold via <strong>, second regular), a cover
+   image (or pair), and body text. `.default-content-wrapper` in a plain section
+   (no block) is the entry container. */
+body.template-project-detail main > .section > .default-content-wrapper h2 {
+  font-size: var(--heading-font-size-xl);
+
+  /* bold-via-markup: the heading is REGULAR by default; only the <strong> the
+     author wraps around the emphasized line renders bold (Prada principle:
+     first line bold, subsequent title lines lighter — driven by markup, not
+     element/line position). */
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--tracking-heading);
+}
+
+body.template-project-detail main > .section > .default-content-wrapper h2 strong {
+  font-weight: var(--weight-bold);
+}
+
+/* consecutive h2s (two-line title: bold line + regular byline line) sit tight */
+body.template-project-detail main > .section > .default-content-wrapper h2 + h2 {
+  margin-top: 0;
+}
+
+body.template-project-detail main > .section > .default-content-wrapper h2 + p {
+  margin-top: var(--space-m);
+}
+
+/* cover image(s): full content width, never full-bleed. A paragraph may hold
+   ONE cover or a side-by-side PAIR (the Wind interview) — the pair gets a gap;
+   `.image-pair` explicitly removes it (author choice). */
+body.template-project-detail main > .section > .default-content-wrapper p:has(img) {
+  display: flex;
+  gap: var(--space-s);
+  margin-top: var(--space-l);
+  line-height: 0;
+}
+
+body.template-project-detail main > .section > .default-content-wrapper p.image-pair {
+  gap: 0;
+}
+
+body.template-project-detail main > .section > .default-content-wrapper p img {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* body text: 20px, left-aligned. Width is full by default; the `Narrow` section
+   style (below) caps + centers the reading column for long-form entries. */
+body.template-project-detail main > .section > .default-content-wrapper p:not(:has(img)) {
+  margin-top: var(--space-m);
+  font-size: var(--heading-font-size-s);
+  line-height: var(--line-height-body-l);
+}
+
+/* interview speaker labels + inline lead lines: authored <strong> renders bold */
+body.template-project-detail main > .section > .default-content-wrapper p strong {
+  font-weight: var(--weight-bold);
+}
+
+/* "View all events" CTA (default content after the event-list block) — centered
+   bordered uppercase button. */
+body.template-project-detail main > .event-list-container .default-content-wrapper {
+  text-align: center;
+}
+
+body.template-project-detail main > .event-list-container .default-content-wrapper a {
+  display: inline-block;
+  margin-top: var(--space-l);
+  padding: var(--space-s) var(--space-m);
+  border: 1px solid var(--text-color);
+  color: var(--text-color);
+  font-size: var(--body-font-size-s);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+body.template-project-detail main > .event-list-container .default-content-wrapper a:hover,
+body.template-project-detail main > .event-list-container .default-content-wrapper a:focus-visible {
+  background-color: var(--text-color);
+  color: var(--background-color);
+}
+
+/* ---- Section style: `Narrow` ----
+   A reading-measure column, centered in the section (the COLUMN is centered, the
+   TEXT stays left-aligned — never centered text, per Prada). Applied via Section
+   Metadata `Style: Narrow`. Generic (not template-scoped) so any page can reuse.
+
+   IMPORTANT: the white content sheet (`> div`) must stay the SAME width on every
+   section of the page — so DON'T narrow `> div`. Instead keep the sheet full and
+   cap the INNER content to the reading measure, centered. The extra width becomes
+   left/right padding on the white area, not a narrower sheet.
+
+   Narrow applies to the body TEXT and (by default) images — but NOT the heading:
+   entry titles always span the full sheet width (per Figma, the title is full-width
+   even when the body is a narrow column). An image row can opt BACK to full width
+   with `.image-pair`/`.image-full` (a side-by-side pair or a gallery, per Figma).
+
+   Two levels: content sits directly under the sheet (`> div > *`), OR — when the
+   section is ALSO `Expandable` — under the injected `.expandable-content` wrapper.
+   The wrapper itself stays full width (its children carry the reading measure). */
+main .section.narrow > div > :not(:is(h1, h2, h3, h4, h5, h6, .expandable-content)),
+main .section.narrow > div > .expandable-content > :not(:is(h1, h2, h3, h4, h5, h6)) {
+  max-width: 700px;
+  margin-inline: auto;
+}
+
+main .section.narrow > div > p.image-pair,
+main .section.narrow > div > p.image-full,
+main .section.narrow > div > .expandable-content > p.image-pair,
+main .section.narrow > div > .expandable-content > p.image-full {
+  max-width: none;
+}
+
+/* ---- Section style: `Expandable` ----
+   Long content is clipped to a preview height behind a fade, with a JS-injected
+   "Read more" button that expands it. `expandable.js` wraps ONLY the trailing TEXT
+   (the leading title + image(s) stay above the fold, so the crop never cuts an
+   image) in an `.expandable-content` div — that div clips, the white sheet and the
+   toggle below it stay unclipped (keeping the button on white). `.is-collapsed`
+   caps the text preview; `.is-expanded` removes the clip. Applied via
+   `Style: Expandable`. */
+main .section.expandable .expandable-content {
+  position: relative;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+}
+
+/* the collapsed preview shows only the first few lines of the TEXT (images are
+   already fully visible above), so this cap is small — a text teaser, not 60vh */
+main .section.expandable.is-collapsed .expandable-content {
+  max-height: 12em;
+}
+
+/* fade the clipped edge to WHITE (the sheet colour), not to the black page
+   ground — an overlay gradient rather than a mask, so nothing turns transparent */
+main .section.expandable.is-collapsed .expandable-content::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: var(--space-2xl);
+  background: linear-gradient(to bottom, transparent, var(--background-color));
+  pointer-events: none;
+}
+
+main .section.expandable.is-expanded .expandable-content {
+  max-height: none;
+}
+
+/* the injected Read-more button — centered bordered uppercase (matches CTAs) */
+main .section.expandable .expandable-toggle {
+  display: block;
+  margin: var(--space-l) auto 0;
+  padding: var(--space-s) var(--space-m);
+  border: 1px solid var(--text-color);
+  background: transparent;
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-s);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+main .section.expandable .expandable-toggle:hover,
+main .section.expandable .expandable-toggle:focus-visible {
+  background-color: var(--text-color);
+  color: var(--background-color);
 }

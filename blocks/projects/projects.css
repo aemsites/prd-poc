@@ -1,0 +1,176 @@
+/* Prada Index projects block — an index of works.
+   Each li = [image cell] + [label cell: title / description / type-tag].
+   Some entries have an empty image cell → they are typographic covers.
+
+   TWO layouts, same card:
+   - BASE (Projects page): a single horizontal row that does NOT wrap; it
+     scrolls sideways and is clipped by the right edge of the white content
+     column (the block's own box = the section's capped `> div`).
+   - `.grid` variant (Home index): the classic 4-column grid that wraps onto
+     new rows. Cards are sized to the same column width in both, so the two
+     read near-identically — one scrolls, one wraps. */
+
+/* base: horizontal scroller. Card width matches the grid's column so 4 sit in
+   view, the rest overflow to the right and are cut off at the content edge.
+   The block bleeds RIGHT past the section's --page-padding to the white column's
+   own edge (`margin-right: -(--page-padding)`), so the row appears to run under
+   that edge and the next card is clipped by it — a wordless cue that there's
+   more to scroll. The scrollbar itself is hidden (that clipped-card cue replaces
+   it). Card widths stay based on the padded content width, so the first 4 still
+   align to the grid columns; only the overflow slides under the bleed edge. */
+.projects:not(.grid) {
+  margin-right: calc(-1 * var(--page-padding));
+  margin-left: calc(-1 * var(--page-padding));
+}
+
+.projects > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--space-s);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+
+.projects > ul::-webkit-scrollbar {
+  display: none;
+}
+
+/* Card width = one grid column of the PADDED content width. The block now
+   bleeds BOTH left and right (2 × --page-padding wider than the content), so
+   subtract 2 × --page-padding from 100% before dividing by 4 — otherwise the
+   extra bleed width would inflate each card and the first four would no longer
+   line up with the grid columns / header. */
+.projects > ul > li {
+  flex: 0 0 calc((100% - 2 * var(--page-padding) - 3 * var(--space-s)) / 4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  background-color: var(--background-color);
+}
+
+/* leading scroll inset: the block bleeds left to the column edge, so give the
+   first card a --page-padding left margin. At rest the row starts at the content
+   edge (as if padded); on scroll-right the first card slides left and disappears
+   under the column's left border rather than stopping at the content edge. */
+.projects:not(.grid) > ul > li:first-child {
+  margin-left: var(--page-padding);
+}
+
+/* trailing scroll room: the block bleeds right to the column edge, so at the
+   scroll end the last card sits flush against that edge. Add a --page-padding
+   right margin on the last card so it can scroll slightly further left, leaving
+   a gutter instead of pinning to the section's right border. */
+.projects:not(.grid) > ul > li:last-child {
+  margin-right: var(--page-padding);
+}
+
+/* grid variant: wrap into 4 equal columns instead of scrolling. */
+.projects.grid > ul {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-m) var(--space-s);
+  overflow: visible;
+}
+
+.projects.grid > ul > li {
+  flex: initial;
+}
+
+/* image cell — square-ish media well on a light-grey placeholder ground */
+.projects .projects-card-image {
+  line-height: 0;
+  aspect-ratio: 1 / 1;
+  background-color: var(--placeholder-color);
+  overflow: hidden;
+}
+
+.projects .projects-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* typographic cover — author types text in the cover cell instead of an image:
+   black card, white display text. A quick way to give an image-less entry a cover. */
+.projects .projects-card-cover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-m);
+  background-color: var(--text-color);
+  color: var(--background-color);
+  font-family: var(--heading-font-family);
+  font-weight: var(--weight-bold);
+  font-size: clamp(28px, 3.2vw, 48px);
+  line-height: 1.02;
+  letter-spacing: var(--tracking-display);
+  text-align: center;
+}
+
+/* cover text may be authored as a bare string or inside a <p> — normalize either */
+.projects .projects-card-cover p {
+  margin: 0;
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+}
+
+/* Scroller only: keep every cover the same square size regardless of text.
+   A flex item defaults to `min-width: auto`, so an unbreakable word (e.g.
+   "Estrangement") overrides the fixed flex-basis and grows the card — and since
+   the cover is `aspect-ratio: 1/1`, wider means taller. `min-width: 0` makes the
+   item honor its flex-basis; the cover then breaks long words where it can and
+   CLIPS any remainder (it's a cover — a cut word is acceptable). Scoped to the
+   scroller so the frozen Home grid (which already caps via `minmax(0,1fr)`) is
+   untouched. */
+.projects:not(.grid) > ul > li {
+  min-width: 0;
+}
+
+.projects:not(.grid) .projects-card-cover {
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+/* label cell — title + description body, type-tag muted grey; no gap between lines */
+.projects .projects-card-body {
+  padding-right: var(--space-xs);
+}
+
+.projects .projects-card-body p {
+  margin: 0;
+  font-size: var(--body-font-size-m);
+  line-height: var(--line-height-body);
+}
+
+/* first line = title (bold), last line = type tag (muted) */
+.projects .projects-card-body p:first-child {
+  font-weight: var(--weight-bold);
+}
+
+.projects .projects-card-body p:last-child {
+  color: rgb(0 0 0 / 40%);
+}
+
+/* single-line label (only a title) stays regular weight — avoid bolding a lone tag */
+.projects .projects-card-body p:only-child {
+  font-weight: var(--weight-regular);
+  color: var(--text-color);
+}
+
+@media (width <= 900px) {
+  /* grid variant drops to 2 columns */
+  .projects.grid > ul {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: var(--space-m);
+  }
+
+  /* base scroller shows ~1.5 cards so the overflow cue reads on a phone */
+  .projects > ul > li {
+    flex-basis: 66%;
+  }
+}

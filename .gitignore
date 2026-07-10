@@ -8,6 +8,11 @@ helix-importer-ui
 *.bak
 .idea
 
+# Per-user KM: the active-login cache is workspace-local; users/** is otherwise tracked
+users/.current-user
+
 # Ensure these files are tracked
 !CLAUDE.md
 !AGENTS.md
+
+.claude/

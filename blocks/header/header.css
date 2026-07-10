@@ -1,6 +1,40 @@
-/* header and nav layout */
-header .nav-wrapper {
+/* Prada Index editorial nav bar.
+   Full-width row: bold "Prada Index" wordmark (left) + grey 37px nav
+   (Calendar / Projects / search … About), under a thin rule. */
+
+/* The nav loads asynchronously; while it's still loading, the empty `header`
+   reserves --nav-height of space that would otherwise show the black page ground
+   and flash before the (white-banded) nav arrives. Pre-paint a WHITE band there,
+   capped + centered to the same content column the loaded nav uses, so the space
+   matches the white sheet from the first paint. Positioned ABSOLUTELY (not in
+   flow) so it fills the reserved box without adding height on top of the loaded
+   nav, and sits BEHIND the nav (z:0 vs .nav-wrapper z:2) so the nav covers it.
+   Home is excluded — its header is relocated and reserves no space. */
+header {
+  position: relative;
+}
+
+header:not(.nav-placed)::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 0;
+  width: 100%;
+  max-width: calc(var(--content-max-width) + 2 * var(--page-padding));
+  height: var(--nav-height);
+  margin-inline: auto;
   background-color: var(--background-color);
+}
+
+body.homepage header::before {
+  content: none;
+}
+
+/* wrapper is transparent so the black page ground shows in the gutters; the
+   white band lives on the capped `nav` (below) — the header thus reads as the
+   top of the same white sheet the content sits on. */
+header .nav-wrapper {
+  background-color: transparent;
   width: 100%;
   z-index: 2;
   position: fixed;
@@ -8,16 +42,16 @@ header .nav-wrapper {
 
 header nav {
   box-sizing: border-box;
+  background-color: var(--background-color);
   display: grid;
   grid-template:
     'hamburger brand tools' var(--nav-height)
     'sections sections sections' 1fr / auto 1fr auto;
   align-items: center;
-  gap: 0 24px;
+  gap: 0 var(--block-padding);
   margin: auto;
-  max-width: 1248px;
   height: var(--nav-height);
-  padding: 0 24px;
+  padding: 0 var(--page-padding);
   font-family: var(--body-font-family);
 }
 
@@ -30,25 +64,6 @@ header nav[aria-expanded='true'] {
   min-height: 100dvh;
 }
 
-@media (width >= 900px) {
-  header .nav-wrapper {
-    position: relative;
-  }
-
-  header nav {
-    display: flex;
-    justify-content: space-between;
-    gap: 0 32px;
-    max-width: 1264px;
-    padding: 0 32px;
-  }
-
-  header nav[aria-expanded='true'] {
-    min-height: 0;
-    overflow: visible;
-  }
-}
-
 header nav p {
   margin: 0;
   line-height: 1;
@@ -58,7 +73,7 @@ header nav a:any-link {
   color: currentcolor;
 }
 
-/* hamburger */
+/* hamburger (mobile) */
 header nav .nav-hamburger {
   grid-area: hamburger;
   height: 22px;
@@ -132,28 +147,32 @@ header nav[aria-expanded='true'] .nav-hamburger-icon::after {
   transform: rotate(-45deg);
 }
 
-@media (width >= 900px) {
-  header nav .nav-hamburger {
-    display: none;
-    visibility: hidden;
-  }
+/* nav-menu wraps sections + tools. On mobile the nav uses named grid areas, so
+   the wrapper must be transparent to layout (`display: contents`) — its children
+   .nav-sections / .nav-tools keep snapping to their `sections` / `tools` areas.
+   On desktop it becomes a real grid item (see the >=900px block). */
+header nav .nav-menu {
+  display: contents;
 }
 
-/* brand */
+/* brand — bold grey wordmark (Figma fills it #707070, same as the nav links) */
 header .nav-brand {
   grid-area: brand;
-  flex-basis: 128px;
-  font-size: var(--heading-font-size-s);
-  font-weight: 700;
+}
+
+header nav .nav-brand p {
+  font-size: var(--heading-font-size-l);
+  font-weight: var(--weight-bold);
   line-height: 1;
+  letter-spacing: -0.03em;
 }
 
-header nav .nav-brand img {
-  width: 128px;
-  height: auto;
+header nav .nav-brand a:any-link {
+  color: var(--metadata-color);
+  text-decoration: none;
 }
 
-/* sections */
+/* sections — grey nav links */
 header nav .nav-sections {
   grid-area: sections;
   flex: 1 1 auto;
@@ -170,103 +189,226 @@ header nav[aria-expanded='true'] .nav-sections {
 header nav .nav-sections ul {
   list-style: none;
   padding-left: 0;
-  font-size: var(--body-font-size-s);
 }
 
-header nav .nav-sections ul > li {
-  font-weight: 500;
+header nav .nav-sections a:any-link {
+  color: var(--metadata-color);
 }
 
-header nav .nav-sections ul > li > ul {
-  margin-top: 0;
+/* tools — About (far right) */
+header nav .nav-tools {
+  grid-area: tools;
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
 }
 
-header nav .nav-sections ul > li > ul > li {
-  font-weight: 400;
+header nav .nav-tools ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
+header nav .nav-tools a:any-link {
+  color: var(--metadata-color);
+}
+
+/* Search item — lives in the sections group (next to Calendar/Projects). The
+   link text is replaced by the code-hosted icon in header.js; the word "Search"
+   survives only as the link's aria-label. inline-flex centers the 30px icon. */
+header nav .nav-search {
+  display: inline-flex;
+  align-items: center;
+}
+
+header nav .icon-search {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-color: var(--metadata-color);
+  mask: url('/icons/search.svg') center / contain no-repeat;
+}
+
+/* the grey shape is drawn by the span's --metadata-color background + mask; the
+   inner <img> would paint the raw (black) SVG on top, so hide it. */
+header nav .icon-search svg,
+header nav .icon-search img {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+/* Desktop editorial bar: single row, wordmark left, nav grouped + About right,
+   all under a thin top rule. */
 @media (width >= 900px) {
-  header nav .nav-sections {
-    display: block;
-    visibility: visible;
-    white-space: nowrap;
+  /* Sticky nav on every page: pin the <header> element itself (its containing
+     block is the tall page body, so it stays put across the whole scroll — a
+     sticky .nav-wrapper would only stick within the short header box and scroll
+     away). Its white nav band covers the capped column while content scrolls
+     beneath; the black ground shows through the transparent gutters. On Home the
+     relocated header handles its own pinning via `header.nav-placed` (below,
+     higher specificity), so Home is unaffected. */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
   }
 
-  header nav[aria-expanded='true'] .nav-sections {
-    align-self: unset;
-  }
-
-  header nav .nav-sections .nav-drop {
+  header .nav-wrapper {
     position: relative;
-    padding-right: 16px;
-    cursor: pointer;
   }
 
-  header nav .nav-sections .nav-drop::after {
-    content: '';
-    display: inline-block;
-    position: absolute;
-    top: 0.5em;
-    right: 2px;
-    transform: rotate(135deg);
-    width: 6px;
-    height: 6px;
-    border: 2px solid currentcolor;
-    border-radius: 0 1px 0 0;
-    border-width: 2px 2px 0 0;
+  /* Nav shares the SAME 4-column grid as the block below (Figma): brand spans
+     columns 1–2, the Calendar/Projects/search cluster + About span columns 3–4.
+     `repeat(4, 1fr)` + the grid's own 12px (`--space-s`) gutter reproduces the
+     block's 351px columns exactly, so the header aligns column-for-column with
+     the grid. */
+  header nav {
+    display: grid;
+
+    /* `grid-template` shorthand clears the mobile NAMED AREAS (hamburger/brand/
+       sections/tools) — otherwise `.nav-brand { grid-area: brand }` etc. keep
+       snapping to those areas and ignore the explicit column placement below.
+       minmax(0, 1fr) — same as the grid block — forces 4 EQUAL columns; plain
+       1fr would let wide nav text inflate its track and break the alignment. */
+    grid-template: auto / repeat(4, minmax(0, 1fr));
+
+    /* top-align so the two top rules (on .nav-brand and .nav-menu) sit on the
+       same y — the taller menu group (30px search icon) must not push its rule
+       up relative to the brand's (Figma 1:13100 shows both rules aligned). */
+    align-items: start;
+    column-gap: var(--space-s);
+    height: auto;
+
+    /* Cap the nav to the same content column as the page sections, on EVERY
+       page: outer footprint = --content-max-width + 2×--page-padding (nav is
+       border-box), centered via `margin: auto` (base rule). Its --page-padding
+       gutter then lands the brand at the same x as section content. On Home the
+       relocated nav (.nav-placed) sits inside the already-capped grid column,
+       which is narrower than this cap, so the cap is inert there — no conflict. */
+    max-width: calc(var(--content-max-width) + 2 * var(--page-padding));
+    padding: var(--page-padding) var(--page-padding) var(--space-m);
   }
 
-  header nav .nav-sections .nav-drop[aria-expanded='true']::after {
-    top: unset;
-    bottom: 0.5em;
-    transform: rotate(315deg);
+  header nav[aria-expanded='true'] {
+    min-height: 0;
+    overflow: visible;
+
+    /* the mobile expanded state defines its own `grid-template` (named areas +
+       explicit tracks) at HIGHER specificity than `header nav` — re-assert the
+       4-column desktop grid here so the areas don't win and revert the layout. */
+    grid-template: none;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  header nav .nav-hamburger {
+    display: none;
+    visibility: hidden;
+  }
+
+  /* grid items need min-width:0 so their min-content (esp. the nowrap nav
+     cluster) doesn't floor the fr distribution and skew the tracks unequal.
+     Also clear the mobile `grid-area` names (brand/sections/tools) — the desktop
+     grid has no named areas, so they'd otherwise force auto-placement and
+     override the explicit column placement below. */
+  header nav > * {
+    min-width: 0;
+    grid-row: 1;
+  }
+
+  /* brand element occupies grid columns 1–2 */
+  header nav .nav-brand {
+    grid-area: auto;
+    grid-column: 1 / 3;
+  }
+
+  /* nav-menu is the grid item spanning columns 3–4 (Figma): it holds the
+     Calendar/Projects/search cluster (left) and About (right), a flex row with
+     space-between so the cluster start-aligns in column 3 and About end-aligns
+     at the right of column 4. `display: contents` (mobile) is overridden here. */
+  header nav .nav-menu {
+    display: flex;
+    grid-area: auto;
+    grid-column: 3 / 5;
+    grid-row: 1;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  header nav .nav-sections {
+    grid-column: auto;
+    grid-row: auto;
+    justify-self: auto;
+    display: flex;
+    visibility: visible;
+    align-items: center;
+    white-space: nowrap;
   }
 
   header nav .nav-sections ul {
     display: flex;
-    gap: 24px;
+    align-items: center;
+    gap: var(--space-m);
     margin: 0;
+    font-size: var(--heading-font-size-l);
+    letter-spacing: -0.03em;
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li {
-    flex: 0 1 auto;
-    position: relative;
+  header nav .nav-tools {
+    grid-column: auto;
+    grid-row: auto;
+    justify-self: auto;
+    font-size: var(--heading-font-size-l);
+    letter-spacing: -0.03em;
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li > ul {
-    display: none;
-    position: relative;
+  header nav .nav-tools ul {
+    font-size: var(--heading-font-size-l);
+    letter-spacing: -0.03em;
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > ul {
-    display: block;
-    position: absolute;
-    left: -24px;
-    width: 200px;
-    top: 150%;
-    padding: 16px;
-    background-color: var(--light-color);
-    white-space: initial;
-  }
-
-  header nav .nav-sections .default-content-wrapper > ul > li > ul::before {
-    content: '';
-    position: absolute;
-    top: -8px;
-    left: 16px;
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 8px solid var(--light-color);
-  }
-
-  header nav .nav-sections .default-content-wrapper > ul > li > ul > li {
-    padding: 8px 0;
+  /* Two thin grey top rules (Figma 1:13100): one over the wordmark (.nav-brand),
+     one over the menu group (.nav-menu). The gap between grid columns 2 and 3
+     (the --space-s gutter) leaves the search area un-ruled, splitting the line
+     into the two Prada-editorial segments. Text sits below its rule via the
+     nav's top padding + align-items:end. */
+  header nav .nav-brand,
+  header nav .nav-menu {
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--space-s);
   }
 }
 
-/* tools */
-header nav .nav-tools {
-  grid-area: tools;
+/* ---- Home nav choreography (Beats 1–3), pure CSS ----
+   header.js relocates the whole <header> into the TOP of the white grid sheet
+   (the grid section's content column) and adds `.nav-placed`. From there the
+   choreography is entirely native scroll — no JS transform, no fixed bar:
+   - Beat 1: the header is now part of the grid sheet, so it rides up and covers
+     the hero WITH the sheet as the section scrolls.
+   - Beat 2: `position: sticky; top: 0` pins the nav at the viewport top while
+     the card grid scrolls beneath it.
+   - Beat 3: the dark Issue section (higher stacking layer, z:5 in styles.css)
+     rises over the entire grid section — nav included — covering it top-down.
+   Because it lives inside the sheet's capped content column, the nav is exactly
+   as wide as the sheet (not viewport-wide). Removing the header from the normal
+   <header> landmark leaves that landmark empty; it reserves no space on Home
+   (`body.homepage header { min-height: 0 }`, foundation). */
+header.nav-placed {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  min-height: 0;
+  background-color: var(--background-color);
+}
+
+header.nav-placed .nav-wrapper {
+  position: static;
+  background-color: transparent;
+}
+
+/* the relocated header sits inside the grid section's padded content column, so
+   drop the nav's own horizontal page-padding to avoid doubling the gutter. */
+header.nav-placed nav {
+  padding-left: 0;
+  padding-right: 0;
 }

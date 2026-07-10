@@ -1,8 +1,12 @@
-# POC
+# Prada Index Website
+
+An editorial "record of culture" site built on Adobe Edge Delivery Services. Monochrome, print-like aesthetic — large display headings, dense data tables, and image-led index card grids.
+
+- **Authoring model:** Document Authoring (da.live)
 
 ## Environments
-- Preview: https://main--prd-poc--aemsites.aem.page/
-- Live: https://main--prd-poc--aemsites.aem.live/
+- Preview: https://main--{repo}--{owner}.aem.page/
+- Live: https://main--{repo}--{owner}.aem.live/
 
 ## Documentation
 

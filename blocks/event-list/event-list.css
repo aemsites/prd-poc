@@ -1,0 +1,128 @@
+/* Prada Index event-list — full-width upcoming-event rows (Calendar, Project
+   Detail). Each event = a metadata ribbon (grey bordered cells, same look as
+   project-header) over a preview row: 42px date + 42px title on the left, a
+   landscape thumbnail pinned right. Per Figma node I1:13732;…;1:13701. */
+
+/* meta spans the full top row; the preview (date + title) and the thumbnail
+   share the second row so the title's top line aligns with the image's top. */
+.event-list .event {
+  display: grid;
+  grid-template-columns: 1fr 210px;
+  column-gap: var(--space-m);
+  row-gap: var(--space-m);
+  align-items: start;
+}
+
+.event-list .event-meta {
+  grid-column: 1 / -1;
+}
+
+.event-list .event-preview {
+  grid-column: 1;
+}
+
+.event-list .event-media {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.event-list .event + .event {
+  margin-top: var(--space-xl);
+}
+
+/* metadata ribbon: grey-bordered cells sharing 1px dividers, 13px grey tracked
+   (block owns its own CSS — shares the look with project-header, no shared rule). */
+.event-list .event-meta {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.event-list .event-meta p {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding: var(--space-2xs);
+  border: 1px solid var(--border-color);
+
+  /* site table rule: the top row shows no top border. The ribbon is one
+     horizontal row, so every cell sits in that top row. */
+  border-top: 0;
+  color: var(--metadata-color);
+  font-size: var(--body-font-size-xs);
+  line-height: 1;
+  letter-spacing: var(--tracking-label);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.event-list .event-meta p + p {
+  margin-left: -1px;
+}
+
+.event-list .event-meta .producer-logo {
+  display: block;
+  height: 13px;
+  width: auto;
+}
+
+/* preview row: date + title inline-left, thumbnail pinned right */
+.event-list .event-preview {
+  display: flex;
+  align-items: start;
+  gap: var(--space-m);
+}
+
+.event-list .event-date,
+.event-list .event-title {
+  margin: 0;
+  font-size: var(--heading-font-size-xl);
+  font-weight: var(--weight-regular);
+  line-height: var(--line-height-display);
+  letter-spacing: -0.03em;
+}
+
+/* date is a fixed lead column; title takes the remaining space */
+.event-list .event-date {
+  flex: 0 0 auto;
+  min-width: 280px;
+}
+
+.event-list .event-title {
+  flex: 1;
+  min-width: 0;
+}
+
+/* landscape thumbnail — sits in the right grid track (row 2), top-aligned with
+   the title on the left. */
+.event-list .event-media {
+  line-height: 0;
+}
+
+.event-list .event-media img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 210 / 123;
+  object-fit: cover;
+}
+
+@media (width <= 900px) {
+  /* single column: meta, then preview, then full-width thumbnail */
+  .event-list .event {
+    grid-template-columns: 1fr;
+  }
+
+  .event-list .event-preview {
+    flex-wrap: wrap;
+  }
+
+  .event-list .event-date {
+    min-width: 0;
+  }
+
+  .event-list .event-media {
+    grid-column: 1;
+    grid-row: auto;
+    width: 100%;
+  }
+}

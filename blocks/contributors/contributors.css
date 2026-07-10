@@ -1,0 +1,42 @@
+/* Prada Index contributors — editorial credits (role + name pairs).
+   Authored as a 2-col key/value table (role | name, one row per entry); the JS
+   rebuilds it as a semantic table where each row is a key cell (role) + value
+   cell (name). The table is laid out as blocks so it renders as the Figma
+   3-column masthead: each entry stacks the bold role over the name, and entries
+   flow top-to-bottom then across the columns. */
+
+.contributors table,
+.contributors tbody {
+  display: block;
+}
+
+.contributors tbody {
+  columns: 3;
+  column-gap: var(--space-xl);
+}
+
+.contributors tr {
+  display: block;
+  break-inside: avoid;
+  margin-bottom: var(--space-l);
+}
+
+.contributors th,
+.contributors td {
+  display: block;
+  margin: 0;
+  font-size: var(--heading-font-size-s);
+  line-height: var(--line-height-body-l);
+  font-weight: var(--weight-regular);
+  text-align: left;
+}
+
+.contributors .contributors-key {
+  font-weight: var(--weight-bold);
+}
+
+@media (width <= 900px) {
+  .contributors tbody {
+    columns: 2;
+  }
+}

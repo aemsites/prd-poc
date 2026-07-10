@@ -1,0 +1,118 @@
+.project-table-search {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-m);
+  padding: var(--space-xs);
+  border: 1px solid var(--border-color);
+
+  /* site table rule: the top row of any table shows no top border */
+  border-top: 0;
+}
+
+.project-table-input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-s);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.project-table-input::placeholder {
+  color: var(--metadata-color);
+  opacity: 1;
+}
+
+.project-table-input:focus {
+  outline: none;
+}
+
+.project-table-clear {
+  flex: none;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--metadata-color);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-s);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.project-table-clear:hover {
+  color: var(--text-color);
+}
+
+/* editorial data table — 13px uppercase grey, 1px grey cell borders, tight rows */
+.project-table table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+/* search variant: gap between the injected search bar and the table */
+.project-table.search table {
+  margin-top: var(--page-padding);
+}
+
+.project-table th,
+.project-table td {
+  padding: 6px 8px;
+  border: 1px solid var(--border-color);
+  color: var(--metadata-color);
+  font-size: var(--body-font-size-xs);
+  line-height: var(--line-height-label);
+  letter-spacing: 0.1em;
+  text-align: left;
+  font-weight: var(--weight-regular);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* only the header row (th) is uppercased; data rows keep their authored case */
+.project-table th {
+  text-transform: uppercase;
+}
+
+/* site table rule: the top row of any table shows no top border */
+.project-table tr:first-child > * {
+  border-top: 0;
+}
+
+/* producer logo (JS-swapped for the text): sized to the 13px cell text,
+   left-aligned like the wordmark it replaces in Figma. */
+.project-table td .producer-logo {
+  display: block;
+  height: 13px;
+  width: auto;
+}
+
+/* Beat 4 — the search bar + column-header row pin together for the rest of the page.
+   The search bar sticks at top:0; the table's header row sticks just below it. */
+.project-table .project-table-search {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background-color: var(--background-color);
+}
+
+.project-table.search tr:first-child th {
+  position: sticky;
+  top: 39px; /* height of the sticky search bar above it */
+  z-index: 2;
+  background-color: var(--background-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-table .project-table-search,
+  .project-table.search tr:first-child th {
+    position: static;
+  }
+}
