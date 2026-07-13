@@ -95,6 +95,15 @@
   margin-left: -1px;
 }
 
+/* producer logo (JS-swapped for the last ribbon cell): sized to the 13px ribbon
+   text so it reads as an inline wordmark. Brightened to white on the dark cover. */
+.hero.hero-cover > div:nth-child(2) > div:first-child .producer-logo {
+  display: block;
+  height: 13px;
+  width: auto;
+  filter: brightness(0) invert(1);
+}
+
 /* title cell: two solid 80px display lines, left-aligned white */
 .hero.hero-cover > div:nth-child(2) > div:last-child {
   display: flex;
