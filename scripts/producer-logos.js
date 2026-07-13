@@ -13,12 +13,13 @@ const LOGOS = {
 const normalize = (text) => text.trim().toLowerCase().replace(/\s+/g, ' ');
 
 /**
- * If `el`'s text matches a known producer, replace its contents with that
- * producer's logo image. Returns true when a logo was applied.
+ * Replace `el`'s contents with a producer's logo image. By default the producer
+ * is resolved from `el`'s text; pass `key` to force a specific producer (e.g. a
+ * fixed brand mark) regardless of the text. Returns true when a logo was applied.
  */
-export default function applyProducerLogo(el) {
+export default function applyProducerLogo(el, key) {
   if (!el) return false;
-  const logo = LOGOS[normalize(el.textContent)];
+  const logo = LOGOS[normalize(key ?? el.textContent)];
   if (!logo) return false;
 
   const img = document.createElement('img');
